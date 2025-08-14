@@ -262,11 +262,11 @@ export default function Home() {
               </section>
 
               {/* What We Do Section */}
-      <section id="what-we-do" className="py-20 bg-[#FAF9F6]">
+      <section id="what-we-do" className="py-20 bg-gradient-to-br from-[#2AB7CA] to-[#1a8a96] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2F2F2F] mb-4">What We Do</h2>
-            <p className="text-xl text-[#2F2F2F]/70 max-w-3xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">What We Do</h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
               We run free or low-cost events, workshops, and learning sessions covering essential tech skills for everyone.
             </p>
           </div>
