@@ -40,7 +40,7 @@ The project includes these key dependencies:
 2. Add a database with these properties:
    - **Name** (Title)
    - **Email** (Rich text)
-   - **Phone** (Phone number)
+   - **Phone Number** (Phone number)
    - **Interests** (Multi-select)
    - **Background** (Select)
    - **Goals** (Rich text)
@@ -58,7 +58,7 @@ The project includes these key dependencies:
    - **Organisation Name** (Title)
    - **Contact Name** (Rich text)
    - **Email** (Rich text)
-   - **Phone** (Phone number)
+   - **Phone Number** (Phone number)
    - **Organisation Type** (Select)
    - **Organisation Size** (Select)
    - **Partnership Interests** (Multi-select)
