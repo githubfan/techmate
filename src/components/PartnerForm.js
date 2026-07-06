@@ -4,6 +4,21 @@ import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
+const partnershipOptions = [
+  { value: 'financial-sponsorship', label: 'Financial sponsorship' },
+  { value: 'event-hosting', label: 'Host events and workshops' },
+  { value: 'mentoring', label: 'Employee mentoring programs' },
+  { value: 'guest-speaking', label: 'Guest speaking' },
+  { value: 'work-experience', label: 'Work experience placements' },
+  { value: 'internships', label: 'Internship opportunities' },
+  { value: 'job-opportunities', label: 'Job opportunities' },
+  { value: 'equipment-donation', label: 'Equipment or resource donation' },
+  { value: 'venue-space', label: 'Venue or space provision' },
+  { value: 'curriculum-development', label: 'Curriculum development' },
+  { value: 'pro-bono-services', label: 'Pro bono services' },
+  { value: 'csr-partnership', label: 'CSR partnership' },
+];
+
 export default function PartnerForm() {
   const [formData, setFormData] = useState({
     contactName: '',
@@ -33,8 +48,7 @@ export default function PartnerForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate captcha
+
     if (!captchaToken) {
       alert('Please complete the captcha verification.');
       return;
@@ -43,21 +57,25 @@ export default function PartnerForm() {
     setIsSubmitting(true);
 
     try {
-      // Submit to Notion via API route (include captcha token)
       const notionResponse = await fetch('/api/submit-partner-interest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, captchaToken })
       });
 
-      if (notionResponse.ok) {
-        // Send confirmation email via EmailJS
+      if (!notionResponse.ok) {
+        const errorData = await notionResponse.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to submit');
+      }
+
+      try {
         await emailjs.send(
           process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
           process.env.NEXT_PUBLIC_EMAILJS_PARTNER_TEMPLATE_ID,
           {
             contact_name: formData.contactName,
             email: formData.email,
+            phone: formData.phone,
             organization_name: formData.OrganisationName,
             organization_type: formData.OrganisationType,
             partnership_interests: formData.partnershipInterests.join(', '),
@@ -65,9 +83,10 @@ export default function PartnerForm() {
           },
           process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
         );
-
-        setSubmitted(true);
+      } catch {
       }
+
+      setSubmitted(true);
     } catch (error) {
       console.error('Submission error:', error);
       alert('Something went wrong. Please try again.');
@@ -86,92 +105,77 @@ export default function PartnerForm() {
 
   if (submitted) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="panel" style={{ padding: '32px', textAlign: 'center' }}>
+        <div className="feature-icon" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-green-800 mb-2">Thank You!</h3>
-        <p className="text-green-700">
-          We've received your partnership inquiry and sent you a confirmation email. 
-          Our partnerships team will be in touch soon!
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>Thank you</h3>
+        <p className="card-copy">
+          We have received your partnership inquiry and sent a confirmation email. Our partnerships team will be in touch soon.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-8">
-      <h3 className="text-2xl font-bold text-[#2F2F2F] mb-6 text-center">
-        Partner with Techmate
-      </h3>
+    <form onSubmit={handleSubmit} className="form-shell" style={{ maxWidth: '920px', margin: '0 auto' }}>
+      <h3 style={{ fontSize: '2rem', textAlign: 'center', marginBottom: '28px' }}>Partner with TECHMATE</h3>
 
-      {/* Contact Information */}
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Contact Name *
-          </label>
+      <div className="form-row two">
+        <div className="form-field">
+          <label>Contact Name *</label>
           <input
             type="text"
             required
             value={formData.contactName}
             onChange={(e) => setFormData(prev => ({ ...prev, contactName: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="input"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Email Address *
-          </label>
+        <div className="form-field">
+          <label>Email Address *</label>
           <input
             type="email"
             required
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="input"
           />
         </div>
       </div>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-          Phone Number
-        </label>
+      <div className="form-field" style={{ marginTop: '16px' }}>
+        <label>Phone Number</label>
         <input
           type="tel"
           value={formData.phone}
           onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+          className="input"
         />
       </div>
 
-      {/* Organisation Information */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-          Organisation Name *
-        </label>
+      <div className="form-field" style={{ marginTop: '16px' }}>
+        <label>Organisation Name *</label>
         <input
           type="text"
           required
           value={formData.OrganisationName}
           onChange={(e) => setFormData(prev => ({ ...prev, OrganisationName: e.target.value }))}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+          className="input"
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Organisation Type
-          </label>
+      <div className="form-row two" style={{ marginTop: '16px' }}>
+        <div className="form-field">
+          <label>Organisation Type</label>
           <select
             value={formData.OrganisationType}
             onChange={(e) => setFormData(prev => ({ ...prev, OrganisationType: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="select"
           >
-            <option value="">Select Type</option>
+            <option value="">Select type</option>
             <option value="tech-company">Technology Company</option>
             <option value="startup">Startup</option>
             <option value="corporation">Large Corporation</option>
@@ -184,16 +188,14 @@ export default function PartnerForm() {
             <option value="other">Other</option>
           </select>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Organisation Size
-          </label>
+        <div className="form-field">
+          <label>Organisation Size</label>
           <select
             value={formData.OrganisationSize}
             onChange={(e) => setFormData(prev => ({ ...prev, OrganisationSize: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="select"
           >
-            <option value="">Select Size</option>
+            <option value="">Select size</option>
             <option value="1-10">1-10 employees</option>
             <option value="11-50">11-50 employees</option>
             <option value="51-200">51-200 employees</option>
@@ -203,51 +205,31 @@ export default function PartnerForm() {
         </div>
       </div>
 
-      {/* Partnership Interests */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-[#2F2F2F] mb-3">
-          Partnership Interests: *
-        </label>
-        <div className="grid md:grid-cols-2 gap-3">
-          {[
-            { value: 'financial-sponsorship', label: 'Financial sponsorship' },
-            { value: 'event-hosting', label: 'Host events/workshops' },
-            { value: 'mentoring', label: 'Employee mentoring programs' },
-            { value: 'guest-speaking', label: 'Guest speaking' },
-            { value: 'work-experience', label: 'Work experience placements' },
-            { value: 'internships', label: 'Internship opportunities' },
-            { value: 'job-opportunities', label: 'Job opportunities' },
-            { value: 'equipment-donation', label: 'Equipment/resource donation' },
-            { value: 'venue-space', label: 'Venue/space provision' },
-            { value: 'curriculum-development', label: 'Curriculum development' },
-            { value: 'pro-bono-services', label: 'Pro bono services' },
-            { value: 'csr-partnership', label: 'CSR partnership' }
-          ].map(interest => (
-            <label key={interest.value} className="flex items-center space-x-2 cursor-pointer">
+      <div className="form-field" style={{ marginTop: '16px' }}>
+        <label>Partnership interests *</label>
+        <div className="checkbox-grid">
+          {partnershipOptions.map((interest) => (
+            <label key={interest.value} className="checkbox-item">
               <input
                 type="checkbox"
                 checked={formData.partnershipInterests.includes(interest.value)}
                 onChange={() => handleInterestChange(interest.value)}
-                className="w-4 h-4 text-[#2AB7CA] border-gray-300 rounded focus:ring-[#2AB7CA]"
               />
-              <span className="text-sm text-[#2F2F2F]">{interest.label}</span>
+              <span>{interest.label}</span>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Budget & Timeline */}
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Budget Range (if applicable)
-          </label>
+      <div className="form-row two" style={{ marginTop: '16px' }}>
+        <div className="form-field">
+          <label>Budget Range (if applicable)</label>
           <select
             value={formData.budget}
             onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="select"
           >
-            <option value="">Select Budget</option>
+            <option value="">Select budget</option>
             <option value="under-1k">Under £1,000</option>
             <option value="1k-5k">£1,000 - £5,000</option>
             <option value="5k-10k">£5,000 - £10,000</option>
@@ -258,16 +240,14 @@ export default function PartnerForm() {
             <option value="to-discuss">To be discussed</option>
           </select>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-            Timeline
-          </label>
+        <div className="form-field">
+          <label>Timeline</label>
           <select
             value={formData.timeline}
             onChange={(e) => setFormData(prev => ({ ...prev, timeline: e.target.value }))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
+            className="select"
           >
-            <option value="">Select Timeline</option>
+            <option value="">Select timeline</option>
             <option value="immediate">Immediate (within 1 month)</option>
             <option value="short-term">Short-term (1-3 months)</option>
             <option value="medium-term">Medium-term (3-6 months)</option>
@@ -278,23 +258,18 @@ export default function PartnerForm() {
         </div>
       </div>
 
-      {/* Message */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-[#2F2F2F] mb-2">
-          Tell us more about your partnership goals
-        </label>
+      <div className="form-field" style={{ marginTop: '16px' }}>
+        <label>Tell us more about your partnership goals</label>
         <textarea
           value={formData.message}
           onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-          rows="4"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2AB7CA]"
-          placeholder="Describe your Organisation's goals, CSR objectives, or how you'd like to support the Techmate community..."
+          className="textarea"
+          placeholder="Describe your organisation goals, CSR objectives, or how you would like to support the TECHMATE community."
         />
       </div>
 
-      {/* hCaptcha */}
       {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
-        <div className="flex justify-center">
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <HCaptcha
             ref={captchaRef}
             sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
@@ -304,17 +279,16 @@ export default function PartnerForm() {
         </div>
       )}
 
-      {/* Submit Button */}
       <button
         type="submit"
         disabled={isSubmitting || !formData.contactName || !formData.email || !formData.OrganisationName || formData.partnershipInterests.length === 0 || (process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && !captchaToken)}
-        className="w-full bg-[#F46036] hover:bg-[#e54d28] disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        className="submit-button"
       >
         {isSubmitting ? 'Submitting...' : 'Submit Partnership Inquiry'}
       </button>
 
-      <p className="text-xs text-[#2F2F2F]/60 mt-4 text-center">
-        By submitting this form, you agree to receive communications from Techmate about partnership opportunities.
+      <p className="note-copy" style={{ textAlign: 'center', marginTop: '14px' }}>
+        By submitting this form, you agree to receive communications from TECHMATE about partnership opportunities.
       </p>
     </form>
   );

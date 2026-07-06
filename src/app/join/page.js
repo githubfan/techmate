@@ -1,94 +1,116 @@
-'use client';
-
+import Link from 'next/link';
 import CommunityJoinForm from '../../components/CommunityJoinForm';
+import { AcademicCapIcon, BriefcaseIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+
+const benefits = [
+  { icon: AcademicCapIcon, title: 'Free learning resources', copy: 'Access to workshops, tutorials, and hands-on learning sessions.' },
+  { icon: ChatBubbleLeftRightIcon, title: 'Mentorship support', copy: 'Connect with experienced tech professionals for guidance.' },
+  { icon: BriefcaseIcon, title: 'Career opportunities', copy: 'Job placements, internships, and networking events.' },
+];
 
 export default function JoinPage() {
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <a href="/"><img src="/techmate-logo.png" alt="Techmate" className="h-8 w-auto" /></a>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a href="/" className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Home
-              </a>
-              <a href="/partner" className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Partner with Us
-              </a>
+    <div className="site-shell">
+      <header className="site-nav scrolled">
+        <Link href="/" className="site-logo">
+          TECH<span>MATE</span>
+        </Link>
+        <nav className="site-nav-links" aria-label="Secondary navigation">
+          <Link href="/" className="site-nav-link">Home</Link>
+          <Link href="/partner" className="site-nav-link">Partner With Us</Link>
+          <Link href="/join" className="site-cta">Join Community</Link>
+        </nav>
+      </header>
+
+      <main>
+        <section className="hero-section" style={{ minHeight: 'auto', paddingTop: 'var(--section-padding-top, 140px)', paddingBottom: 'var(--section-padding-bottom, 72px)' }}>
+          <div className="hero-orb one" />
+          <div className="hero-orb two" />
+          <div className="hero-inner">
+            <div className="hero-grid">
+              <div>
+                <div className="hero-badge">
+                  <span className="hero-badge-dot" />
+                  Community membership
+                </div>
+
+                <h1 className="hero-title" style={{ whiteSpace: 'normal'}}>Join the <span className="accent-text">TECHMATE</span> community.</h1>
+                <p className="hero-copy">Take the first step toward building your digital confidence and connecting with an inclusive community that supports your journey.</p>
+                <div className="hero-pills">
+                  <span className="pill">Learning resources</span>
+                  <span className="pill">Mentorship</span>
+                  <span className="pill">Career growth</span>
+                </div>
+              </div>
+              <div className="hero-aside">
+                <div className="hero-aside-stack">
+                  <div className="metric-card panel-soft">
+                    <div className="metric-number">Free</div>
+                    <div className="metric-label">Access to programs, workshops, and community support.</div>
+                  </div>
+                  <div className="metric-card panel-soft">
+                    <div className="metric-number">Human</div>
+                    <div className="metric-label">Guidance that is warm, practical, and judgment free.</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </section>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#2AB7CA] to-[#1a8a96] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6">
-            Join the Techmate Community
-          </h1>
-          <p className="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Take the first step towards building your tech skills and connecting with an inclusive community that supports your journey.
-          </p>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#2F2F2F] text-center mb-12">
-            What You'll Get as a Member
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#2AB7CA] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Free Learning Resources</h3>
-              <p className="text-[#2F2F2F]/70">Access to workshops, tutorials, and hands-on coding sessions.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#FFD166] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Mentorship Support</h3>
-              <p className="text-[#2F2F2F]/70">Connect with experienced tech professionals for guidance.</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#F46036] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2 2H8a2 2 0 00-2-2V4M16 6h.01M8 6h.01M16 10h.01M8 10h.01M16 14h.01M8 14h.01" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Career Opportunities</h3>
-              <p className="text-[#2F2F2F]/70">Job placements, internships, and networking events.</p>
+        <section className="section-block" style={{ background: 'var(--background-soft)' }}>
+          <div className="section-inner">
+            <SectionTitle
+              kicker="What you get"
+              title="Membership benefits"
+              copy="TECHMATE is open to everyone who wants to grow their digital skills and be part of an inclusive tech community."
+              align="center"
+            />
+            <div className="grid-3" style={{ marginTop: '48px' }}>
+              {benefits.map((benefit) => (
+                <div className="feature-card" key={benefit.title} style={{ textAlign: 'left' }}>
+                  <div className="feature-icon">
+                    {(() => {
+                      const Icon = benefit.icon;
+                      return <Icon className="h-6 w-6" />;
+                    })()}
+                  </div>
+                  <h3>{benefit.title}</h3>
+                  <p className="card-copy">{benefit.copy}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Form Section */}
-      <section className="py-20 bg-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CommunityJoinForm />
-        </div>
-      </section>
+        <section className="section-block">
+          <div className="section-inner">
+            <SectionTitle kicker="Join now" title="Tell us about yourself." copy="The form below helps us understand how we can support you and what kind of opportunities you are looking for." align="center" />
+            <div style={{ marginTop: '48px' }}>
+              <CommunityJoinForm />
+            </div>
+          </div>
+        </section>
+      </main>
 
-      {/* Footer */}
-      <footer className="bg-white py-8 border-t border-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#2F2F2F]/70">
-            &copy; 2025 Techmate. All rights reserved. Opening doors to technology for everyone.
-          </p>
+      <footer className="footer-shell">
+        <div className="section-inner">
+          <div className="footer-bottom" style={{ borderTop: 'none', paddingTop: 0 }}>
+            <p>© 2026 TECHMATE. All rights reserved. Opening doors to technology for everyone.</p>
+            <Link href="/partner" className="accent-text" style={{ fontFamily: 'var(--font-syne)', fontWeight: 700 }}>Partner With Us</Link>
+          </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function SectionTitle({ kicker, title, copy, align = 'left' }) {
+  return (
+    <div className={align === 'center' ? 'text-center' : ''}>
+      <span className="section-kicker">{kicker}</span>
+      <h2 className="section-title">{title}</h2>
+      <p className="section-copy" style={align === 'center' ? { marginLeft: 'auto', marginRight: 'auto' } : undefined}>{copy}</p>
     </div>
   );
 }

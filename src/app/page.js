@@ -1,528 +1,493 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
-import { 
-  AcademicCapIcon, 
-  ArrowPathIcon, 
-  UserIcon, 
-  UsersIcon, 
-  BriefcaseIcon, 
-  HandRaisedIcon 
+import { useState } from 'react';
+import {
+  AcademicCapIcon,
+  Bars3Icon,
+  ChevronUpIcon,
+  GlobeAltIcon,
+  HandRaisedIcon,
+  HeartIcon,
+  MegaphoneIcon,
+  RocketLaunchIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  UserCircleIcon,
+  UserGroupIcon,
+  UsersIcon,
 } from '@heroicons/react/24/outline';
 
+const stats = [
+  { icon: AcademicCapIcon, number: '1 in 3', label: 'Adults lack basic digital skills' },
+  { icon: RocketLaunchIcon, number: '85%', label: 'Of jobs require digital literacy' },
+  { icon: HeartIcon, number: '0', label: 'People left behind is the goal' },
+];
 
+const audiences = [
+  {
+    icon: AcademicCapIcon,
+    title: 'Young People',
+    copy: 'Coding fundamentals, AI literacy, online safety, and practical digital confidence for school and career.',
+    tag: 'Schools and youth clubs',
+  },
+  {
+    icon: UserGroupIcon,
+    title: 'Parents and Seniors',
+    copy: 'Digital support, with guidance on screen time, social media, and AI tools to use technology with confidence.',
+    tag: 'Libraries and community centres',
+  },
+  {
+    icon: UserCircleIcon,
+    title: 'Professionals & Businesses',
+    copy: 'Essential digital skills, including AI literacy, productivity, online safety, and career development.',
+    tag: 'Workshops and drop-in sessions',
+  },
+  {
+    icon: HandRaisedIcon,
+    title: 'Underrepresented Groups',
+    copy: 'Culturally aware programs that open access, opportunity, and practical support where it is needed most.',
+    tag: 'Partnership programs',
+  },
+];
+
+const programs = [
+  { number: '01', icon: GlobeAltIcon, title: 'Digital Foundations', copy: 'Essential skills for devices, email, internet navigation, and digital safety.', level: 'All audiences' },
+  { number: '02', icon: SparklesIcon, title: 'AI Literacy', copy: 'How AI works, where it appears in daily life, and how to use it responsibly.', level: 'All levels' },
+  { number: '03', icon: ShieldCheckIcon, title: 'Online Safety and Privacy', copy: 'Passwords, scam awareness, privacy basics, and safer digital habits.', level: 'Families and seniors' },
+  { number: '04', icon: RocketLaunchIcon, title: 'Digital Skills for Work', copy: 'Productivity tools, workplace AI, remote collaboration, and professional presence online.', level: 'Adults and young people' },
+  { number: '05', icon: AcademicCapIcon, title: 'Youth Coding and AI Club', copy: 'Weekly sessions where young people build, create, and experiment in a supportive environment.', level: 'Ages 8 to 18' },
+  { number: '06', icon: UsersIcon, title: 'Train the Trainer', copy: 'Equipping teachers, volunteers, and community workers to spread digital skills further.', level: 'Community partners' },
+];
+
+const values = [
+  { title: 'Accessibility', copy: 'Free or low-cost programs delivered in accessible spaces and formats.' },
+  { title: 'Dignity', copy: 'Every participant is met with respect, patience, and zero judgment.' },
+  { title: 'Community Led', copy: 'Curriculum and delivery are shaped by the people we serve.' },
+  { title: 'Relevance', copy: 'Everything is taught in the context of work, family, safety, and opportunity.' },
+  { title: 'Critical Thinking', copy: 'We teach people to question, evaluate, and use digital tools wisely.' },
+  { title: 'Partnership', copy: 'We work with schools, libraries, employers, and public services to scale impact.' },
+];
+
+
+function SectionTitle({ kicker, title, copy, align = 'left' }) {
+  return (
+    <div className={align === 'center' ? 'text-center' : ''}>
+      <span className="section-kicker">{kicker}</span>
+      <h2 className="section-title">{title}</h2>
+      {copy ? <p className="section-copy" style={align === 'center' ? { marginLeft: 'auto', marginRight: 'auto' } : undefined}>{copy}</p> : null}
+    </div>
+  );
+}
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleSmoothScroll = (e, targetId) => {
-    e.preventDefault();
+  const handleSmoothScroll = (event, targetId) => {
+    event.preventDefault();
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    // Close mobile menu if open
     setMobileMenuOpen(false);
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <img src="/techmate-logo.png" alt="Techmate" className="h-8 w-auto" />
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')} className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
-                <a href="#what-we-do" onClick={(e) => handleSmoothScroll(e, 'what-we-do')} className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">What We Do</a>
-                <a href="#join" onClick={(e) => handleSmoothScroll(e, 'join')} className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">Join Us</a>
-                <a href="#partners" onClick={(e) => handleSmoothScroll(e, 'partners')} className="text-[#2F2F2F] hover:text-[#2AB7CA] px-3 py-2 rounded-md text-sm font-medium transition-colors">Partners</a>
-                <a href="#cta" onClick={(e) => handleSmoothScroll(e, 'cta')} className="bg-[#F46036] hover:bg-[#e54d28] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer inline-block">
-                  Get Involved
-                </a>
-              </div>
-            </div>
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-[#2F2F2F] hover:text-[#2AB7CA] p-2 cursor-pointer"
-              >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          {/* Mobile menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-[#FAF9F6]">
-                <a 
-                  href="#about" 
-                  onClick={(e) => handleSmoothScroll(e, 'about')}
-                  className="text-[#2F2F2F] hover:text-[#2AB7CA] block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                >
-                  About
-                </a>
-                <a 
-                  href="#what-we-do" 
-                  onClick={(e) => handleSmoothScroll(e, 'what-we-do')}
-                  className="text-[#2F2F2F] hover:text-[#2AB7CA] block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                >
-                  What We Do
-                </a>
-                <a 
-                  href="#join" 
-                  onClick={(e) => handleSmoothScroll(e, 'join')}
-                  className="text-[#2F2F2F] hover:text-[#2AB7CA] block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                >
-                  Join Us
-                </a>
-                <a 
-                  href="#partners" 
-                  onClick={(e) => handleSmoothScroll(e, 'partners')}
-                  className="text-[#2F2F2F] hover:text-[#2AB7CA] block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                >
-                  Partners
-                </a>
-                <a 
-                  href="#cta"
-                  onClick={(e) => handleSmoothScroll(e, 'cta')}
-                  className="bg-[#F46036] hover:bg-[#e54d28] text-white px-4 py-2 rounded-md text-base font-medium transition-colors w-full text-left cursor-pointer inline-block"
-                >
-                  Get Involved
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+    <div className="site-shell">
+      <header className={`site-nav ${mobileMenuOpen ? 'scrolled' : ''}`}>
+        <a href="#home" className="site-logo" onClick={(event) => handleSmoothScroll(event, 'home')}>
+          TECH<span>MATE</span>
+        </a>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2AB7CA] to-[#1a8a96] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[#2F2F2F] opacity-10"></div>
-        
-        {/* Geometric Shapes Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Circles */}
-          <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-4 sm:w-8 h-4 sm:h-8 bg-[#FFD166] opacity-30 rounded-full animate-pulse"></div>
-          <div className="absolute top-20 sm:top-40 right-10 sm:right-20 w-6 sm:w-12 h-6 sm:h-12 bg-white opacity-20 rounded-full"></div>
-          <div className="absolute bottom-16 sm:bottom-32 left-1/4 w-3 sm:w-6 h-3 sm:h-6 bg-[#F46036] opacity-40 rounded-full animate-bounce"></div>
-          <div className="absolute top-1/3 right-1/3 w-2 sm:w-4 h-2 sm:h-4 bg-[#FFD166] opacity-50 rounded-full"></div>
-          
-          {/* Triangles */}
-          <div className="absolute top-8 sm:top-16 right-1/4 w-0 h-0 border-l-3 border-r-3 border-b-5 sm:border-l-6 sm:border-r-6 sm:border-b-10 border-l-transparent border-r-transparent border-b-white opacity-25"></div>
-          <div className="absolute bottom-10 sm:bottom-20 right-8 sm:right-16 w-0 h-0 border-l-4 border-r-4 border-b-7 sm:border-l-8 sm:border-r-8 sm:border-b-14 border-l-transparent border-r-transparent border-b-[#FFD166] opacity-35"></div>
-          <div className="absolute top-1/2 left-8 sm:left-16 w-0 h-0 border-l-2 border-r-2 border-b-4 sm:border-l-5 sm:border-r-5 sm:border-b-8 border-l-transparent border-r-transparent border-b-[#F46036] opacity-30"></div>
-          
-          {/* Squares and Rectangles */}
-          <div className="absolute top-12 sm:top-24 left-1/3 w-5 sm:w-10 h-5 sm:h-10 bg-white opacity-15 transform rotate-45"></div>
-          <div className="absolute bottom-20 sm:bottom-40 right-1/4 w-4 sm:w-8 h-6 sm:h-12 bg-[#FFD166] opacity-25 transform rotate-12"></div>
-          <div className="absolute top-1/4 right-6 sm:right-12 w-3 sm:w-6 h-3 sm:h-6 bg-[#F46036] opacity-35 transform rotate-45 animate-spin" style={{animationDuration: '10s'}}></div>
-          
-          {/* Hexagons using CSS */}
-          <div className="absolute top-16 sm:top-32 left-1/2 w-4 sm:w-8 h-4 sm:h-8 bg-white opacity-20 transform rotate-30" style={{clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)'}}>
-          </div>
-          <div className="absolute bottom-12 sm:bottom-24 left-10 sm:left-20 w-5 sm:w-10 h-5 sm:h-10 bg-[#FFD166] opacity-30 transform rotate-15" style={{clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)'}}>
-          </div>
-          
-          {/* Lines/Dashes */}
-          <div className="absolute top-1/3 left-1/5 w-8 sm:w-16 h-0.5 sm:h-1 bg-white opacity-25 transform rotate-45"></div>
-          <div className="absolute bottom-1/3 right-1/5 w-6 sm:w-12 h-0.5 sm:h-1 bg-[#FFD166] opacity-35 transform -rotate-12"></div>
-          <div className="absolute top-2/3 left-1/3 w-4 sm:w-8 h-0.5 sm:h-1 bg-[#F46036] opacity-40 transform rotate-90"></div>
-          
-          {/* Plus signs */}
-          <div className="absolute top-6 sm:top-12 right-1/3 text-white opacity-20 text-lg sm:text-2xl">+</div>
-          <div className="absolute bottom-6 sm:bottom-12 left-1/3 text-[#FFD166] opacity-30 text-base sm:text-xl">+</div>
-          
-          {/* Dots pattern */}
-          <div className="absolute top-1/4 left-6 sm:left-12 flex space-x-1">
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white opacity-30 rounded-full"></div>
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white opacity-30 rounded-full"></div>
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white opacity-30 rounded-full"></div>
-          </div>
-          <div className="absolute bottom-1/4 right-10 sm:right-20 flex flex-col space-y-1">
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-[#FFD166] opacity-40 rounded-full"></div>
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-[#FFD166] opacity-40 rounded-full"></div>
-            <div className="w-0.5 sm:w-1 h-0.5 sm:h-1 bg-[#FFD166] opacity-40 rounded-full"></div>
-          </div>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              Opening Doors to Technology
-              <span className="block">
-                <span className="text-white">for </span>
-                <span className="bg-gradient-to-r from-[#FFEB3B] to-[#FFC107] bg-clip-text text-transparent font-extrabold">
-                  everyone
-                </span>
-              </span>
-            </h1>
-            <p className="text-xl sm:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Breaking down barriers and creating pathways into the technology sector for people from underrepresented groups.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/join" className="bg-[#F46036] hover:bg-[#e54d28] text-white px-8 py-4 rounded-lg text-lg font-medium transition-colors shadow-lg cursor-pointer inline-block text-center">
-                Join Our Community
-              </a>
-              <a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')} className="bg-transparent hover:bg-white text-white hover:text-[#2AB7CA] px-8 py-4 rounded-lg text-lg font-medium transition-colors border-2 border-white cursor-pointer inline-block text-center">
-                Learn More
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+        <nav className="site-nav-links" aria-label="Primary navigation">
+          <a href="#about" className="site-nav-link" onClick={(event) => handleSmoothScroll(event, 'about')}>About</a>
+          <a href="#serve" className="site-nav-link" onClick={(event) => handleSmoothScroll(event, 'serve')}>Who We Serve</a>
+          <a href="#programs" className="site-nav-link" onClick={(event) => handleSmoothScroll(event, 'programs')}>Programs</a>
+          <a href="#founder" className="site-nav-link" onClick={(event) => handleSmoothScroll(event, 'founder')}>Founder</a>
+          <a href="#contact" className="site-cta" onClick={(event) => handleSmoothScroll(event, 'contact')}>Get Involved</a>
+        </nav>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button type="button" className="menu-button" aria-label="Open menu" onClick={() => setMobileMenuOpen((value) => !value)}>
+          <Bars3Icon className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </header>
 
-                <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-                <div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-[#2F2F2F] mb-6">About Techmate</h2>
-                  <p className="text-lg text-[#2F2F2F]/80 mb-6 leading-relaxed">
-                  Techmate is a community-driven initiative dedicated to breaking down barriers and creating accessible pathways into the technology sector. We believe that everyone, regardless of their background, age, or previous experience, deserves the opportunity to thrive in today's digital world.
-                  </p>
-                  <p className="text-lg text-[#2F2F2F]/80 mb-6 leading-relaxed">
-                  Through free and low-cost workshops, mentoring programs, and community events, we're building bridges between underrepresented groups and the tech industry. Our mission is simple: open doors, create opportunities, and ensure no one is left behind in the digital revolution.
-                  </p>
+      <div className={`mobile-panel ${mobileMenuOpen ? 'open' : ''}`}>
+        <nav>
+          <a href="#about" onClick={(event) => handleSmoothScroll(event, 'about')}>About</a>
+          <a href="#serve" onClick={(event) => handleSmoothScroll(event, 'serve')}>Who We Serve</a>
+          <a href="#programs" onClick={(event) => handleSmoothScroll(event, 'programs')}>Programs</a>
+          <a href="#founder" onClick={(event) => handleSmoothScroll(event, 'founder')}>Founder</a>
+          <a href="#contact" onClick={(event) => handleSmoothScroll(event, 'contact')}>Get Involved</a>
+        </nav>
+      </div>
 
-                    </div>
-                    
-                    <div className="relative h-full">
-                      <div className="bg-gradient-to-br from-[#2AB7CA] to-[#1a8a96] rounded-2xl relative overflow-hidden flex items-center justify-center p-8">
-                      <div className="relative w-full h-80 sm:h-96 bg-white rounded-xl p-6">
-                      <Image 
-                      src="/about-image.jpg" 
-                      alt="About Techmate" 
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      className="rounded-lg"
-                      />
-                      </div>
+      <main id="home">
+        <section className="hero-section">
+          <div className="hero-orb one" />
+          <div className="hero-orb two" />
+          <div className="hero-orb three" />
 
-                      {/* Decorative elements */}
-                      <div className="absolute top-4 right-4 w-8 h-8 bg-[#FFD166] opacity-30 rounded-full"></div>
-                      <div className="absolute bottom-4 left-4 w-6 h-6 bg-[#F46036] opacity-40 rounded-full"></div>
-                      <div className="absolute top-1/2 right-8 w-4 h-4 bg-white opacity-25 rounded-full"></div>
-                      </div>
-                    </div>
-                    </div>
-                    
-                    {/* Values Section */}
-                <div className="text-center mb-16">
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#2F2F2F] mb-4">Our Values</h3>
-                <p className="text-xl text-[#2F2F2F]/70 max-w-3xl mx-auto">
-                  Everything we do is guided by these core principles that drive our mission forward.
+          <div className="hero-inner">
+            <div className="hero-grid">
+              <div style={{ maxWidth: '620px', justifySelf: 'start', textAlign: 'center' }}>
+                <h1 className="hero-title">
+                  TECH<span className="accent-text">MATE</span>
+                </h1>
+                <br />
+                <div className="hero-badge">
+                  <span className="hero-badge-dot" />
+                  Digital Skills and AI Literacy
+                </div>
+                <p className="hero-copy">
+                  Empowering every generation with digital and AI literacy so no one is left behind in the digital age.
                 </p>
+                <div className="hero-actions">
+                  <a href="#contact" className="button-primary" onClick={(event) => handleSmoothScroll(event, 'contact')}>Get Involved</a>
+                  <a href="#about" className="button-secondary" onClick={(event) => handleSmoothScroll(event, 'about')}>Learn More</a>
                 </div>
-                
-                <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center p-6 rounded-lg bg-[#FAF9F6] border border-[#FAF9F6]/50 shadow-sm">
-                  <div className="w-16 h-16 bg-[#2AB7CA] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Empower</h3>
-                  <p className="text-[#2F2F2F]/70">Provide individuals with the knowledge and tools they need to succeed in tech.</p>
-                </div>
-                
-                <div className="text-center p-6 rounded-lg bg-[#FAF9F6] border border-[#FAF9F6]/50 shadow-sm">
-                  <div className="w-16 h-16 bg-[#FFD166] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                  </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Connect</h3>
-                  <p className="text-[#2F2F2F]/70">Bridge the community with tech organisations for mentoring and career development.</p>
-                </div>
-                
-                <div className="text-center p-6 rounded-lg bg-[#FAF9F6] border border-[#FAF9F6]/50 shadow-sm">
-                  <div className="w-16 h-16 bg-[#F46036] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#2F2F2F] mb-2">Support</h3>
-                  <p className="text-[#2F2F2F]/70">Promote digital inclusion for older generations and build confidence online.</p>
-                </div>
+              
+                <div className="hero-pills" style={{ marginTop: '40px' }}>
+                  <span className="pill">Young People</span>
+                  <span className="pill">Parents and Seniors</span>
+                  <span className="pill">Professionals & Businesses</span>
+                  <span className="pill">Underrepresented Groups</span>
                 </div>
               </div>
-              </section>
 
-              {/* What We Do Section */}
-      <section id="what-we-do" className="py-20 bg-gradient-to-br from-[#2AB7CA] to-[#1a8a96] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">What We Do</h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              We run free or low-cost events, workshops, and learning sessions covering essential tech skills for everyone.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#2AB7CA] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
+              <div className="hero-aside">
+                <div className="panel-soft" style={{ height: '100%', minHeight: '300px', display: 'grid', alignContent: 'stretch' }}>
+                  <div style={{ position: 'relative', borderRadius: '22px', overflow: 'hidden', border: '1px solid var(--line)', background: 'linear-gradient(160deg, rgba(255, 170, 0, 0.14), rgba(0, 194, 168, 0.1), rgba(17, 32, 64, 0.94))' }}>
+                    <Image
+                      src="/about-image.jpg"
+                      alt="Dr Kalu Kalu, Founder and CEO of TECHMATE"
+                      fill
+                      sizes="(max-width: 900px) 100vw, 50vw"
+                      style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                    />
+                  </div>
+        
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">Practical Coding Skills</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">From beginner-friendly HTML to Python, data analysis, and beyond.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#FFD166] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">Cyber Security Awareness</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">Stay safe online and protect your personal data.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#F46036] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">AI Literacy</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">Understanding artificial intelligence and how to use it responsibly.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#2AB7CA] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">Digital Footprint Education</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">Managing your online presence for personal and professional success.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#FFD166] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">Essential Digital Skills</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">Navigate the internet, use productivity tools, and communicate effectively online.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-white/50">
-              <div className="w-12 h-12 bg-[#F46036] rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-[#2F2F2F] mb-3">Technology for Everyday Life</h3>
-              <p className="text-[#2F2F2F]/70 mb-4">Smartphone basics, online banking, video calling, and avoiding scams for older adults.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-        <section id="join" className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#2F2F2F] mb-4">Who Can Join?</h2>
-          <p className="text-xl text-[#2F2F2F]/70 max-w-3xl mx-auto">
-            Techmate is open to everyone who wants to grow their digital skills and be part of an inclusive tech community.
-          </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#2AB7CA] rounded-full flex items-center justify-center mx-auto mb-4">
-              <AcademicCapIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Students & Young People</h3>
-            <p className="text-[#2F2F2F]/70">Curious about tech and looking to explore career opportunities.</p>
-          </div>
-          
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#FFD166] rounded-full flex items-center justify-center mx-auto mb-4">
-              <ArrowPathIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Career Changers</h3>
-            <p className="text-[#2F2F2F]/70">Looking to transition into the tech industry from other fields.</p>
-          </div>
-          
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#F46036] rounded-full flex items-center justify-center mx-auto mb-4">
-              <UserIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Older Adults</h3>
-            <p className="text-[#2F2F2F]/70">Want to improve digital skills and confidence with technology.</p>
-          </div>
-          
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#2AB7CA] rounded-full flex items-center justify-center mx-auto mb-4">
-              <UsersIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Underrepresented Groups</h3>
-            <p className="text-[#2F2F2F]/70">Anyone wanting to gain digital skills and confidence in tech.</p>
-          </div>
-          
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#FFD166] rounded-full flex items-center justify-center mx-auto mb-4">
-              <BriefcaseIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Industry Professionals</h3>
-            <p className="text-[#2F2F2F]/70">Want to give back through mentoring, coaching, or guest speaking.</p>
-          </div>
-          
-          <div className="text-center p-6">
-            <div className="w-20 h-20 bg-[#F46036] rounded-full flex items-center justify-center mx-auto mb-4">
-              <HandRaisedIcon className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-lg font-bold text-[#2F2F2F] mb-2">Community Leaders</h3>
-            <p className="text-[#2F2F2F]/70">Leading local initiatives and helping to spread digital skills in their communities.</p>
-          </div>
             </div>
           </div>
         </section>
 
-        {/* Partners Section */}
-      <section id="partners" className="py-20 bg-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2F2F2F] mb-4">Partner with Techmate</h2>
-            <p className="text-xl text-[#2F2F2F]/70 max-w-3xl mx-auto">
-              Join us as part of your Corporate Social Responsibility efforts and help build a stronger, more diverse future workforce.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-[#2AB7CA] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-[#2F2F2F] mb-2">Host Events</h3>
-              <p className="text-sm text-[#2F2F2F]/70">Speak at seminars and workshops</p>
+        <section className="stats-strip">
+          {stats.map((stat) => (
+            <div className="stat-card" key={stat.label}>
+              <span className="stat-pill" aria-hidden="true">
+                <stat.icon className="h-5 w-5" />
+              </span>
+              <span className="stat-number">{stat.number}</span>
+              <span className="stat-label">{stat.label}</span>
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-[#FFD166] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-[#2F2F2F] mb-2">Mentoring</h3>
-              <p className="text-sm text-[#2F2F2F]/70">Provide guidance to our members</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-[#F46036] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14V6.5" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-[#2F2F2F] mb-2">Work Experience</h3>
-              <p className="text-sm text-[#2F2F2F]/70">Offer placements for young people</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-[#2AB7CA] rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-[#2F2F2F] mb-2">Sponsor</h3>
-              <p className="text-sm text-[#2F2F2F]/70">Support events and materials</p>
-            </div>
-          </div>
-        </div>
-      </section>
+          ))}
+        </section>
 
-      {/* Call-to-Action Section */}
-      <section id="cta" className="py-20 bg-[#2F2F2F] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-[#FAF9F6]/80">
-            Join our community today and be part of opening doors to technology for everyone.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/join" className="bg-[#F46036] hover:bg-[#e54d28] text-white px-8 py-4 rounded-lg text-lg font-medium transition-colors shadow-lg cursor-pointer inline-block text-center">
-              Join Our Community
-            </a>
-            <a href="/partner" className="bg-[#2AB7CA] hover:bg-[#1a8a96] text-white px-8 py-4 rounded-lg text-lg font-medium transition-colors shadow-lg cursor-pointer inline-block text-center">
-              Become a Partner
-            </a>
-          </div>
-        </div>
-      </section>
+        <section id="about" className="section-block">
+          <div className="section-inner">
+            <div className="grid-2" style={{ alignItems: 'center' }}>
+              <div>
+                <SectionTitle
+                  kicker="01 - About TECHMATE"
+                  title={<>We bridge the<br />digital divide.</>}
+                />
+                <div className="quote-block" style={{ marginTop: '30px' }}>
+                  Technology is for everyone. We make sure everyone knows it.
+                </div>
+                <p className="section-copy" style={{ marginTop: '22px' }}>
+                  TECHMATE is a community agency built to ensure digital transformation lifts everyone, not just the people who already have access, resources, and familiarity with technology.
+                </p>
+                <p className="section-copy">
+                  As AI reshapes work, education, healthcare, and civic life, the gap between those who understand these technologies and those who do not is widening. TECHMATE bridges it one person, one community at a time.
+                </p>
+                <div className="button-row" style={{ marginTop: '28px' }}>
+                  <a href="#pitch" className="button-primary" onClick={(event) => handleSmoothScroll(event, 'pitch')}>Our Story</a>
+                </div>
+              </div>
 
-      {/* Footer */}
-      <footer className="bg-white py-12 border-t border-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <img src="/techmate-logo.png" alt="Techmate" className="h-8 w-auto mb-4" />
-              <p className="text-[#2F2F2F]/70 mb-4 max-w-md">
-                Opening doors to technology for everyone. 
-              </p>
-              <div className="flex space-x-4">
-                <a href="https://twitter.com/techmate" target="_blank" rel="noopener noreferrer" className="bg-[#FAF9F6] hover:bg-[#f0ede8] p-2 rounded-full transition-colors cursor-pointer inline-block">
-                  <svg className="w-5 h-5 text-[#2F2F2F]/70" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="https://linkedin.com/company/techmate" target="_blank" rel="noopener noreferrer" className="bg-[#FAF9F6] hover:bg-[#f0ede8] p-2 rounded-full transition-colors cursor-pointer inline-block">
-                  <svg className="w-5 h-5 text-[#2F2F2F]/70" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-                <a href="https://youtube.com/@techmate" target="_blank" rel="noopener noreferrer" className="bg-[#FAF9F6] hover:bg-[#f0ede8] p-2 rounded-full transition-colors cursor-pointer inline-block">
-                  <svg className="w-5 h-5 text-[#2F2F2F]/70" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                </a>
+              <div className="grid-2">
+                <div className="feature-card">
+                    <div className="feature-icon">
+                      <MegaphoneIcon className="h-6 w-6" />
+                    </div>
+                  <h3>Our Mission</h3>
+                  <p className="card-copy">To equip people of all ages and backgrounds with digital and AI literacy skills to participate fully in modern society.</p>
+                </div>
+                <div className="feature-card">
+                    <div className="feature-icon amber">
+                      <GlobeAltIcon className="h-6 w-6" />
+                    </div>
+                  <h3>Our Vision</h3>
+                  <p className="card-copy">A community where technology is a tool for equity, not a barrier to it.</p>
+                </div>
               </div>
             </div>
-            
-            <div>
-              <h4 className="font-bold text-[#2F2F2F] mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-[#2F2F2F]/70">
-                <li><a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')} className="hover:text-[#2AB7CA] transition-colors">About Us</a></li>
-                <li><a href="#what-we-do" onClick={(e) => handleSmoothScroll(e, 'what-we-do')} className="hover:text-[#2AB7CA] transition-colors">What We Do</a></li>
-                <li><a href="#join" onClick={(e) => handleSmoothScroll(e, 'join')} className="hover:text-[#2AB7CA] transition-colors">Join Us</a></li>
-                <li><a href="#partners" onClick={(e) => handleSmoothScroll(e, 'partners')} className="hover:text-[#2AB7CA] transition-colors">Partners</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-bold text-[#2F2F2F] mb-4">Contact</h4>
-              <ul className="space-y-2 text-[#2F2F2F]/70">
-                <li>hello@techmate.org</li>
-                <li>+44 (0) 123 456 7890</li>
-                <li className="text-[#FFD166] font-medium">Follow us on social media</li>
-              </ul>
+          </div>
+        </section>
+
+        <section id="serve" className="section-block" style={{ background: 'var(--background-soft)' }}>
+          <div className="section-inner">
+            <SectionTitle
+              kicker="02 - Who We Serve"
+              title={<>Four communities.<br />One mission.</>}
+              copy="TECHMATE was built around four core audiences, each with unique needs, barriers, and potential."
+            />
+            <div className="grid-2" style={{ marginTop: '48px' }}>
+              {audiences.map((item) => (
+                <div className="feature-card" key={item.title}>
+                  <div className="feature-icon">
+                    {(() => {
+                      const Icon = item.icon;
+                      return <Icon className="h-6 w-6" />;
+                    })()}
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p className="card-copy">{item.copy}</p>
+                  <div className="tag-row" style={{ marginTop: '18px' }}>
+                    <span className="tag">{item.tag}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          
-          <div className="border-t border-[#FAF9F6] mt-8 pt-8 text-center text-[#2F2F2F]/70">
-            <p>&copy; 2025 Techmate. All rights reserved. Sponsored by Success Mindset 365.</p>
+        </section>
+
+        <section id="programs" className="section-block">
+          <div className="section-inner">
+            <SectionTitle
+              kicker="03 - Our Programs"
+              title="What we teach."
+              copy="Practical, relevant, and jargon free. Our programs are built around real life, real jobs, and real challenges."
+            />
+            <div className="grid-3" style={{ marginTop: '48px' }}>
+              {programs.map((program) => (
+                <div className="panel" key={program.title} style={{ padding: '26px' }}>
+                  <div className="section-meta" style={{ justifyContent: 'space-between', marginBottom: '16px' }}>
+                    <div className="feature-icon" style={{ marginBottom: 0 }}>
+                      {(() => {
+                        const Icon = program.icon;
+                        return <Icon className="h-6 w-6" />;
+                      })()}
+                    </div>
+                    <span className="badge-chip">{program.number}</span>
+                  </div>
+                  <h3>{program.title}</h3>
+                  <p className="card-copy">{program.copy}</p>
+                  <div className="tag-row" style={{ marginTop: '18px' }}>
+                    <span className="tag">{program.level}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="values" className="section-block" style={{ background: 'var(--background-soft)' }}>
+          <div className="section-inner">
+            <SectionTitle
+              kicker="04 - Our Values"
+              title="What we stand for."
+              copy="Six principles guide everything we do, from program design to how we speak with every person who walks through our doors."
+            />
+            <div className="grid-3" style={{ marginTop: '48px' }}>
+              {values.map((value, index) => (
+                <div className="value-card" key={value.title}>
+                  <div className={`value-bar ${index % 3 === 1 ? 'amber' : index % 3 === 2 ? 'coral' : ''}`} style={{ width: '42px', height: '3px', borderRadius: '999px', marginBottom: '18px', background: index % 3 === 1 ? 'var(--accent)' : index % 3 === 2 ? 'var(--coral)' : 'var(--primary)' }} />
+                  <h3>{value.title}</h3>
+                  <p className="card-copy">{value.copy}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="founder" className="section-block">
+          <div className="section-inner">
+            <SectionTitle kicker="05 - Meet the Founder" title={<>The person behind<br />the mission.</>} />
+
+            <div className="grid-2" style={{ marginTop: '48px', alignItems: 'start' }}>
+              <div className="founder-card" style={{ padding: '12px', position: 'relative', width: 'fit-content', maxWidth: '100%', justifySelf: 'start' }}>
+                <div style={{ position: 'relative', width: 'clamp(230px, 24vw, 300px)', aspectRatio: '3 / 4', borderRadius: '18px', overflow: 'hidden', border: '1px solid var(--line)', background: 'linear-gradient(160deg, rgba(255, 170, 0, 0.12), rgba(0, 194, 168, 0.1), rgba(17, 32, 64, 0.94))' }}>
+                  <Image
+                    src="/about-photo.png"
+                    alt="Dr Kalu Kalu, Founder and CEO of TECHMATE"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 300px"
+                    style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                  />
+                </div>
+               
+              </div>
+
+              <div>
+                <h3 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05, marginBottom: '8px' }}>Dr Kalu Kalu</h3>
+                <p className="accent-text" style={{ fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: '0.8rem' }}>Founder and Chief Executive Officer · TECHMATE</p>
+                <div className="quote-block" style={{ margin: '26px 0' }}>
+                  Technology is for everyone. My mission is to make sure no one is left out.
+                </div>
+                <p className="section-copy">Dr Kalu Kalu is the Founder and CEO of TECHMATE, a community agency dedicated to closing the digital divide through accessible, human-centred digital and AI literacy education.</p>
+                <p className="section-copy">With a deep commitment to equity and community empowerment, he established TECHMATE on a simple but powerful belief: that no one should be left behind in the digital age.</p>
+                <div className="tag-row" style={{ marginTop: '24px' }}>
+                  <span className="tag">Digital Equity</span>
+                  <span className="tag">AI Literacy</span>
+                  <span className="tag">Community Empowerment</span>
+                  <span className="tag">Tech for Good</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="pitch" className="section-block" style={{ background: 'linear-gradient(175deg, var(--background-soft) 0%, var(--background) 100%)' }}>
+          <div className="section-inner">
+            <SectionTitle kicker="06 - The Pitch" title={<>Why TECHMATE.<br />Why now.</>} />
+            <div className="grid-2" style={{ marginTop: '48px' }}>
+              <div>
+                <div className="panel" style={{ padding: '24px', marginBottom: '18px' }}>
+                  <h3>The Opportunity</h3>
+                  <p className="card-copy">AI is embedded in job applications, healthcare, school tools, and daily services right now. Communities that do not invest in digital literacy today will face deeper exclusion within a decade.</p>
+                </div>
+                <div className="panel" style={{ padding: '24px', marginBottom: '18px' }}>
+                  <h3>What We Deliver</h3>
+                  <p className="card-copy">Workshops, drop-in sessions, one-to-one mentoring, train the trainer programs, and partnership commissions with schools, libraries, employers, and public services.</p>
+                </div>
+                <div className="panel" style={{ padding: '24px' }}>
+                  <h3>The Ask</h3>
+                  <p className="card-copy">We are seeking founding partners, funders, corporate sponsors, local government, and community organisations who believe digital equity is not optional.</p>
+                </div>
+              </div>
+              <div className="grid-2">
+                <div className="metric-card">
+                  <div className="metric-number">1 in 3</div>
+                  <div className="metric-label">Adults lack basic digital skills needed for everyday life and work.</div>
+                </div>
+                <div className="metric-card">
+                  <div className="metric-number">85%</div>
+                  <div className="metric-label">Of jobs now require digital literacy as a baseline skill.</div>
+                </div>
+                <div className="metric-card">
+                  <div className="metric-number">2026</div>
+                  <div className="metric-label">The year AI literacy becomes as essential as reading and writing.</div>
+                </div>
+                <div className="metric-card">
+                  <div className="metric-number">0</div>
+                  <div className="metric-label">People who should be left behind.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="section-block" style={{ background: 'var(--background-soft)' }}>
+          <div className="section-inner">
+            <SectionTitle kicker="07 - Get Involved" title={<>Let us build something<br />that matters.</>} copy="Whether you are a partner, funder, volunteer, participant, or simply curious, we would love to hear from you." />
+
+            <div className="grid-2" style={{ marginTop: '48px' }}>
+              <div className="grid-2">
+                <div className="info-card">
+                  <div className="contact-icon">
+                    <HandRaisedIcon className="h-5 w-5" />
+                  </div>
+                  <h3>Partner With Us</h3>
+                  <p className="card-copy">Organisations, schools, and businesses supporting digital equity in the community.</p>
+                </div>
+                <div className="info-card">
+                  <div className="contact-icon amber">
+                    <HeartIcon className="h-5 w-5" />
+                  </div>
+                  <h3>Fund Our Work</h3>
+                  <p className="card-copy">Trusts, foundations, and corporate funders. Impact reports and program proposals are ready.</p>
+                </div>
+                <div className="info-card">
+                  <div className="contact-icon coral">
+                    <UsersIcon className="h-5 w-5" />
+                  </div>
+                  <h3>Volunteer and Mentor</h3>
+                  <p className="card-copy">Tech professionals and community members who want to give their time and skills.</p>
+                </div>
+                <div className="info-card">
+                  <div className="contact-icon">
+                    <AcademicCapIcon className="h-5 w-5" />
+                  </div>
+                  <h3>Join a Program</h3>
+                  <p className="card-copy">Individuals and families looking to build digital confidence and AI skills.</p>
+                </div>
+              </div>
+
+              <div className="panel" style={{ padding: '28px' }}>
+                <h3 style={{ marginBottom: '18px' }}>Contact</h3>
+                <p className="card-copy">Serving our local community and beyond. Available for partnerships across the region.</p>
+                <div className="tag-row" style={{ marginTop: '22px' }}>
+                  <span className="tag">info@techmatecommunity.org</span>
+                </div>
+                <div className="button-row" style={{ marginTop: '26px' }}>
+                  <a href="/join" className="button-primary">Join Our Community</a>
+                  <a href="/partner" className="button-secondary">Become a Partner</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="cta-band section-block" style={{ paddingTop: '72px', paddingBottom: '72px' }}>
+          <div className="section-inner">
+            <div className="panel" style={{ padding: '34px', textAlign: 'center' }}>
+              <h2 className="section-title" style={{ marginBottom: '14px' }}>Ready to get started?</h2>
+              <p className="section-copy" style={{ marginLeft: 'auto', marginRight: 'auto' }}>Join our community today and help open doors to technology for everyone.</p>
+              <div className="button-row" style={{ justifyContent: 'center', marginTop: '26px' }}>
+                <a href="/join" className="button-primary">Join Our Community</a>
+                <a href="/partner" className="button-secondary">Become a Partner</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer-shell">
+        <div className="section-inner">
+          <div className="footer-grid">
+            <div>
+              <div className="site-logo" style={{ marginBottom: '14px' }}>TECH<span>MATE</span></div>
+              <p className="footer-copy" style={{ maxWidth: '280px' }}>Your guide to the digital world. Empowering every generation with digital and AI literacy.</p>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '16px' }}>About</h4>
+              <div className="footer-links">
+                <a href="#about" onClick={(event) => handleSmoothScroll(event, 'about')}>Our Story</a>
+                <a href="#values" onClick={(event) => handleSmoothScroll(event, 'values')}>Our Values</a>
+                <a href="#pitch" onClick={(event) => handleSmoothScroll(event, 'pitch')}>The Pitch</a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '16px' }}>Programs</h4>
+              <div className="footer-links">
+                <a href="#programs" onClick={(event) => handleSmoothScroll(event, 'programs')}>Digital Foundations</a>
+                <a href="#programs" onClick={(event) => handleSmoothScroll(event, 'programs')}>AI Literacy</a>
+                <a href="#programs" onClick={(event) => handleSmoothScroll(event, 'programs')}>Online Safety</a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '16px' }}>Get Involved</h4>
+              <div className="footer-links">
+                <a href="#contact" onClick={(event) => handleSmoothScroll(event, 'contact')}>Partner With Us</a>
+                <a href="#contact" onClick={(event) => handleSmoothScroll(event, 'contact')}>Fund Our Work</a>
+                <a href="#contact" onClick={(event) => handleSmoothScroll(event, 'contact')}>Join a Program</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <p>© 2026 TECHMATE Community Agency. All rights reserved.</p>
+            <span className="accent-text" style={{ fontFamily: 'var(--font-syne)', fontWeight: 700 }}>No one gets left behind.</span>
           </div>
         </div>
       </footer>
+
+      <a href="#home" className="back-to-top" onClick={(event) => handleSmoothScroll(event, 'home')} aria-label="Back to top">
+        <ChevronUpIcon className="h-5 w-5" />
+      </a>
     </div>
   );
 }

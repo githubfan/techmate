@@ -45,9 +45,9 @@ export async function POST(request) {
           rich_text: [{ text: { content: data.contactName } }]
         },
         'Email': {
-          rich_text: [{ text: { content: data.email } }]
+          email: data.email
         },
-        'Phone Number': {
+        'Phone': {
           phone_number: data.phone || null
         },
         'Organisation Type': {
